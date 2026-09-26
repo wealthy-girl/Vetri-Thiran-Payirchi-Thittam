@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<main class="container">
+
+    <div class="card form">
+
+        <h1>
+            Jewelry Budget Planner
+        </h1>
+
+
+        <form
+            id="planner"
+            enctype="multipart/form-data"
+        >
+
+            <div class="field">
+
+                <label>
+                    Budget (₹)
+                </label>
+
+                <input
+                    id="budget"
+                    name="budget"
+                    type="number"
+                    min="1"
+                    required
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Occasion
+                </label>
+
+                <input
+                    id="occasion"
+                    name="occasion"
+                    value="wedding"
+                    required
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Style
+                </label>
+
+                <select
+                    id="style"
+                    name="style"
+                >
+
+                    <option>
+                        modern
+                    </option>
+
+                    <option>
+                        traditional
+                    </option>
+
+                    <option>
+                        minimalist
+                    </option>
+
+                    <option>
+                        statement
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Outfit Image (Optional)
+                </label>
+
+                <input
+                    id="image"
+                    name="image"
+                    type="file"
+                    accept="
+                        image/png,
+                        image/jpeg,
+                        image/webp
+                    "
+                >
+
+            </div>
+
+
+            <button
+                class="btn"
+                type="submit"
+            >
+                Generate Recommendations
+            </button>
+
+        </form>
+
+
+        <div
+            id="result"
+            class="result"
+        ></div>
+
+    </div>
+
+</main>
+
+
+<script src="/static/js/app.js"></script>
+
+<script src="/static/js/planner.js"></script>
+
+
+<script>
+
+document
+    .querySelector("#planner")
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+            try {
+
+                const formData =
+                    new FormData(
+                        event.target
+                    );
+
+
+                const data =
+                    await api(
+                        "/api/generate-jewelry",
+                        {
+
+                            method: "POST",
+
+                            body: formData
+                        }
+                    );
+
+
+                showResult(data);
+
+            } catch (error) {
+
+                document
+                    .querySelector("#result")
+                    .innerHTML =
+                    `<p class="error">
+                        ${esc(error.message)}
+                    </p>`;
+            }
+        }
+    );
+
+</script>
+
+{% endblock %}

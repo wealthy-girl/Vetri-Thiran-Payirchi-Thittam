@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<main class="container">
+
+    <div class="card form">
+
+        <h1>
+            Home Interior Planner
+        </h1>
+
+
+        <form id="planner">
+
+            <div class="field">
+
+                <label>
+                    Budget (₹)
+                </label>
+
+                <input
+                    id="budget"
+                    type="number"
+                    min="1"
+                    required
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Rooms
+                </label>
+
+                <input
+                    id="rooms"
+                    value="Living Room, Bedroom"
+                    required
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Style
+                </label>
+
+                <select id="style">
+
+                    <option>
+                        modern
+                    </option>
+
+                    <option>
+                        minimalist
+                    </option>
+
+                    <option>
+                        traditional
+                    </option>
+
+                    <option>
+                        contemporary
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Items JSON
+                </label>
+
+                <textarea
+                    id="items"
+                    placeholder='{"lights":2,"fans":1}'
+                >{}</textarea>
+
+            </div>
+
+
+            <button
+                class="btn"
+                type="submit"
+            >
+                Generate Recommendations
+            </button>
+
+        </form>
+
+
+        <div
+            id="result"
+            class="result"
+        ></div>
+
+    </div>
+
+</main>
+
+
+<script src="/static/js/app.js"></script>
+
+<script src="/static/js/planner.js"></script>
+
+
+<script>
+
+document
+    .querySelector("#planner")
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+            try {
+
+                const items =
+                    JSON.parse(
+                        document
+                            .querySelector("#items")
+                            .value || "{}"
+                    );
+
+
+                const data =
+                    await api(
+                        "/api/generate-home",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    budget:
+                                        Number(
+                                            document
+                                                .querySelector("#budget")
+                                                .value
+                                        ),
+
+                                    rooms:
+                                        document
+                                            .querySelector("#rooms")
+                                            .value
+                                            .split(",")
+                                            .map(
+                                                x =>
+                                                    x.trim()
+                                            ),
+
+                                    style:
+                                        document
+                                            .querySelector("#style")
+                                            .value,
+
+                                    items,
+
+                                    priorities: []
+                                })
+                        }
+                    );
+
+
+                showResult(data);
+
+            } catch (error) {
+
+                document
+                    .querySelector("#result")
+                    .innerHTML =
+                    `<p class="error">
+                        ${esc(error.message)}
+                    </p>`;
+            }
+        }
+    );
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,211 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family:
+        Inter,
+        Arial,
+        sans-serif;
+
+    background: #f7f7fb;
+
+    color: #20202a;
+}
+
+nav {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding:
+        18px 7%;
+
+    background: white;
+
+    border-bottom:
+        1px solid #eeeeee;
+}
+
+.brand {
+    font-weight: 800;
+
+    font-size: 22px;
+
+    color: #6d3df5;
+
+    text-decoration: none;
+}
+
+nav a {
+    margin-left: 18px;
+
+    text-decoration: none;
+
+    color: #333333;
+}
+
+.container {
+    max-width: 1100px;
+
+    margin:
+        40px auto;
+
+    padding:
+        0 20px;
+}
+
+.hero {
+    text-align: center;
+
+    padding:
+        70px 10px;
+}
+
+.hero h1 {
+    font-size: 48px;
+
+    margin:
+        10px 0;
+}
+
+.hero p {
+    font-size: 18px;
+
+    color: #666666;
+}
+
+.grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(230px, 1fr)
+        );
+
+    gap: 20px;
+}
+
+.card {
+    background: white;
+
+    border-radius: 18px;
+
+    padding: 24px;
+
+    box-shadow:
+        0 8px 30px
+        rgba(0, 0, 0, 0.05);
+}
+
+.form {
+    max-width: 650px;
+
+    margin:
+        0 auto;
+}
+
+.field {
+    margin:
+        14px 0;
+}
+
+.field label {
+    display: block;
+
+    font-weight: 700;
+
+    margin-bottom: 6px;
+}
+
+.field input,
+.field select,
+.field textarea {
+    width: 100%;
+
+    padding: 12px;
+
+    border:
+        1px solid #dddddd;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+}
+
+.field textarea {
+    min-height: 100px;
+
+    resize: vertical;
+}
+
+.btn {
+    display: inline-block;
+
+    border: 0;
+
+    border-radius: 10px;
+
+    padding:
+        12px 18px;
+
+    background: #6d3df5;
+
+    color: white;
+
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+.btn.secondary {
+    background: #eeeeee;
+
+    color: #222222;
+}
+
+.result {
+    margin-top: 25px;
+}
+
+.item {
+    padding: 15px;
+
+    border:
+        1px solid #eeeeee;
+
+    border-radius: 12px;
+
+    margin:
+        10px 0;
+
+    background: #ffffff;
+}
+
+.muted {
+    color: #777777;
+}
+
+.error {
+    color: #b00020;
+}
+
+.success {
+    color: #087443;
+}
+
+@media (max-width: 600px) {
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    nav {
+        padding:
+            15px 4%;
+    }
+}

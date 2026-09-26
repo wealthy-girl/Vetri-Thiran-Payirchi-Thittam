@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<main class="container">
+
+    <div class="card form">
+
+        <h1>
+            Party Budget Planner
+        </h1>
+
+
+        <form id="planner">
+
+            <div class="field">
+
+                <label>
+                    Budget (₹)
+                </label>
+
+                <input
+                    id="budget"
+                    type="number"
+                    min="1"
+                    required
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Number of Guests
+                </label>
+
+                <input
+                    id="guests"
+                    type="number"
+                    min="1"
+                    required
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Event Type
+                </label>
+
+                <select id="event_type">
+
+                    <option>
+                        birthday
+                    </option>
+
+                    <option>
+                        wedding
+                    </option>
+
+                    <option>
+                        corporate
+                    </option>
+
+                    <option>
+                        anniversary
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Venue
+                </label>
+
+                <input
+                    id="venue"
+                    value="home"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    City
+                </label>
+
+                <input
+                    id="city"
+                >
+
+            </div>
+
+
+            <button
+                class="btn"
+                type="submit"
+            >
+                Generate Recommendations
+            </button>
+
+        </form>
+
+
+        <div
+            id="result"
+            class="result"
+        ></div>
+
+    </div>
+
+</main>
+
+
+<script src="/static/js/app.js"></script>
+
+<script src="/static/js/planner.js"></script>
+
+
+<script>
+
+document
+    .querySelector("#planner")
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+            try {
+
+                const data =
+                    await api(
+                        "/api/generate-party",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    budget:
+                                        Number(
+                                            document
+                                                .querySelector("#budget")
+                                                .value
+                                        ),
+
+                                    guests:
+                                        Number(
+                                            document
+                                                .querySelector("#guests")
+                                                .value
+                                        ),
+
+                                    event_type:
+                                        document
+                                            .querySelector("#event_type")
+                                            .value,
+
+                                    venue:
+                                        document
+                                            .querySelector("#venue")
+                                            .value,
+
+                                    city:
+                                        document
+                                            .querySelector("#city")
+                                            .value,
+
+                                    priorities: []
+                                })
+                        }
+                    );
+
+
+                showResult(data);
+
+            } catch (error) {
+
+                document
+                    .querySelector("#result")
+                    .innerHTML =
+                    `<p class="error">
+                        ${esc(error.message)}
+                    </p>`;
+            }
+        }
+    );
+
+</script>
+
+{% endblock %}

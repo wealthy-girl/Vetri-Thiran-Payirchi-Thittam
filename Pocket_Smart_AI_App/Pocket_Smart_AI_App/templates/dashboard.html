@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<main class="container">
+
+    <h1 id="welcome">
+        Dashboard
+    </h1>
+
+
+    <div class="grid">
+
+        <a
+            class="card"
+            href="/home"
+        >
+
+            <h2>
+                Home Planner
+            </h2>
+
+            <p>
+                Create a home budget plan.
+            </p>
+
+        </a>
+
+
+        <a
+            class="card"
+            href="/party"
+        >
+
+            <h2>
+                Party Planner
+            </h2>
+
+            <p>
+                Create an event budget.
+            </p>
+
+        </a>
+
+
+        <a
+            class="card"
+            href="/jewelry"
+        >
+
+            <h2>
+                Jewelry Planner
+            </h2>
+
+            <p>
+                Find jewelry within budget.
+            </p>
+
+        </a>
+
+    </div>
+
+
+    <h2>
+        Recommendation History
+    </h2>
+
+
+    <div id="history"></div>
+
+</main>
+
+
+<script src="/static/js/app.js"></script>
+
+<script src="/static/js/dashboard.js"></script>
+
+{% endblock %}
